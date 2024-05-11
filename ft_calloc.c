@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msavelie <msavelie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 13:28:35 by msavelie          #+#    #+#             */
-/*   Updated: 2024/04/22 13:28:35 by msavelie         ###   ########.fr       */
+/*   Created: 2024/04/18 16:11:19 by msavelie          #+#    #+#             */
+/*   Updated: 2024/04/30 14:18:53 by msavelie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdint.h>
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+void	*ft_calloc(size_t count, size_t size)
 {
-	char	*substr;
-	size_t	str_len;
+	void	*ptr;
+	size_t	total;
 
-	if (!s)
+	total = count * size;
+	if (count != 0)
+	{
+		if (size > SIZE_MAX / count)
+			return (NULL);
+	}
+	ptr = malloc(total);
+	if (!ptr)
 		return (NULL);
-	str_len = ft_strlen(s);
-	if (start > str_len)
-		return (ft_strdup(""));
-	if (start + len > str_len)
-		len = str_len - start;
-	substr = ft_calloc(sizeof(char), len + 1);
-	if (!substr)
-		return (NULL);
-	ft_memcpy(substr, s + start, len);
-	substr[len] = '\0';
-	return (substr);
+	ft_bzero(ptr, total);
+	return (ptr);
 }

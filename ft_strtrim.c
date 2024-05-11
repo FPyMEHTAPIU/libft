@@ -5,13 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: msavelie <msavelie@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/21 18:01:26 by msavelie          #+#    #+#             */
-/*   Updated: 2024/04/21 18:01:26 by msavelie         ###   ########.fr       */
+/*   Created: 2024/04/29 11:15:28 by msavelie          #+#    #+#             */
+/*   Updated: 2024/04/29 11:15:28 by msavelie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-//#include "libft.h"
+#include "libft.h"
 
 static int	check_char(char const symbol, char const *set)
 {
@@ -29,44 +28,24 @@ static int	check_char(char const symbol, char const *set)
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	size_t	i;
-	size_t	j;
-	int		check[2];
 	char	*str;
+	size_t	start;
+	size_t	end;
+	size_t	len;
 
-	i = 0;
-	while (s1[i] != '\0')
-	{
-		if (i == 0)
-			check[0] = check_char(s[i], set);
-		i++;
-	}
-	if (i - 1 != 0 && i - 1 != '\0')
-		check[1] = check_char(s[i - 1], set);
-	if (!check[0] && !check[1])
-	{
-		str = malloc(i);
-		// TODO: copy the whole string to the str
-	}
-	else
-	{
-		if (check[0] && !check[1])
-		{
-			str = malloc(i - 1);
-			// TODO: copy the string to the str without 1st char (start from the second char)
-		}
-		else if (!check[0] && check[1])
-		{
-			str = malloc(i - 1);
-			// TODO: copy the string to the str without the last char
-		}
-		else 
-		{
-			str = malloc(i - 2);
-			// TODO: copy the string to the str without the first and the last chars
-		}
-	}
+	if (!s1 || !set)
+		return (NULL);
+	start = 0;
+	while (s1[start] && check_char(s1[start], set))
+		start++;
+	end = ft_strlen(s1);
+	while (end > start && check_char(s1[end - 1], set))
+		end--;
+	len = end - start;
+	str = ft_calloc(sizeof(char), len + 1);
 	if (!str)
 		return (NULL);
+	ft_memcpy(str, s1 + start, len);
+	str[len] = '\0';
 	return (str);
 }
